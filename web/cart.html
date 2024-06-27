@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Store - Cart</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .cart-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .cart-item {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            transition: transform 0.3s;
+            width: calc(33.333% - 20px);
+            box-sizing: border-box;
+        }
+
+        .cart-item img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 10px;
+        }
+
+        .cart-item h2 {
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+
+        .cart-item .price {
+            color: #ff6600;
+            font-size: 1.1em;
+            margin: 10px 0;
+        }
+
+        .cart-item button {
+            padding: 10px;
+            background: #ff6600;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 5px;
+            transition: background 0.3s;
+        }
+
+        .cart-item button:hover {
+            background: #e65500;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul class="menu-left">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="cart.html">Cart</a></li>
+                <li><a href="checkout.html">Checkout</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="menu-right">
+                <div class="search-bar">
+                    <input type="text" placeholder="Search for products...">
+                    <button>Search</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <h1>Shopping Cart</h1>
+        <div class="cart-items">
+            <!-- Add cart items here -->
+        </div>
+        <button id="checkout-button">Proceed to Checkout</button>
+    </main>
+    <footer>
+        <p>&copy; 2024 Online Store. All rights reserved.</p>
+    </footer>
+    <script>
+        function loadCartItems() {
+            const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+            const cartItemsContainer = document.querySelector('.cart-items');
+
+            if (cartItems.length === 0) {
+                cartItemsContainer.innerHTML = '<p>Your cart is empty.</p>';
+            } else {
+                cartItems.forEach((item, index) => {
+                    const cartItem = document.createElement('div');
+                    cartItem.className = 'cart-item';
+                    cartItem.id = `cart-item-${index}`;
+                    cartItem.innerHTML = `
+                        <img src="${item.img}" alt="${item.name}">
+                        <h2>${item.name}</h2>
+                        <p class="price">$<span id="price-${index}">${item.price}</span></p>
+                        <button onclick="redirectToEditPage(${index})">Edit</button>
+                        <button onclick="deleteCartItem(${index})">Delete</button>
+                    `;
+                    cartItemsContainer.appendChild(cartItem);
+                });
+            }
+        }
+
+        function redirectToEditPage(index) {
+            window.location.href = `edit_item.html?index=${index}`;
+        }
+
+        function deleteCartItem(index) {
+            const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+            cartItems.splice(index, 1);
+            localStorage.setItem('cartItems', JSON.stringify(cartItems));
+            document.getElementById(`cart-item-${index}`).remove();
+            updateCartItems();
+        }
+
+        function updateCartItems() {
+            const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+            const cartItemsContainer = document.querySelector('.cart-items');
+            cartItemsContainer.innerHTML = '';
+            cartItems.forEach((item, index) => {
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.id = `cart-item-${index}`;
+                cartItem.innerHTML = `
+                    <img src="${item.img}" alt="${item.name}">
+                    <h2>${item.name}</h2>
+                    <p class="price">$<span id="price-${index}">${item.price}</span></p>
+                    <button onclick="redirectToEditPage(${index})">Edit</button>
+                    <button onclick="deleteCartItem(${index})">Delete</button>
+                `;
+                cartItemsContainer.appendChild(cartItem);
+            });
+        }
+
+        document.getElementById('checkout-button').addEventListener('click', function () {
+            alert('Proceeding to checkout...');
+            // Here you can add functionality to proceed to the checkout process.
+        });
+
+        window.onload = loadCartItems;
+    </script>
+</body>
+
+</html>
