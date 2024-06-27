@@ -44,6 +44,12 @@
             margin: 10px 0;
         }
 
+        .cart-item .color {
+            color: #ff6600;
+            font-size: 1.1em;
+            margin: 10px 0;
+        }
+
         .cart-item button {
             padding: 10px;
             background: #ff6600;
@@ -129,6 +135,7 @@
                         <img src="${item.img}" alt="${item.name}">
                         <h2>${item.name}</h2>
                         <p class="price">$<span id="price-${index}">${item.price}</span></p>
+                        <p class="color">Color: <span id="color-${index}">${item.color}</span></p>
                         <button onclick="redirectToEditPage(${index})">Edit</button>
                         <button onclick="deleteCartItem(${index})">Delete</button>
                     `;
@@ -161,6 +168,7 @@
                     <img src="${item.img}" alt="${item.name}">
                     <h2>${item.name}</h2>
                     <p class="price">$<span id="price-${index}">${item.price}</span></p>
+                    <p class="color">Color: <span id="color-${index}">${item.color}</span></p>
                     <button onclick="redirectToEditPage(${index})">Edit</button>
                     <button onclick="deleteCartItem(${index})">Delete</button>
                 `;
