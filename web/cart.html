@@ -100,7 +100,7 @@
                     cartItem.className = 'cart-item';
                     cartItem.id = `cart-item-${index}`;
                     cartItem.innerHTML = `
-                        <img src="${item.img}" alt="${item.name}">
+                        <img src="${validateImageUrl(item.img)}" alt="${item.name}">
                         <h2>${item.name}</h2>
                         <p class="price">$<span id="price-${index}">${item.price}</span></p>
                         <button onclick="redirectToEditPage(${index})">Edit</button>
@@ -109,6 +109,16 @@
                     cartItemsContainer.appendChild(cartItem);
                 });
             }
+        }
+
+        function validateImageUrl(url) {
+            const img = new Image();
+            img.src = url;
+            img.onerror = function () {
+                // Use a default image if the original image fails to load
+                img.src = 'path/to/default/image.jpg';
+            };
+            return img.src;
         }
 
         function redirectToEditPage(index) {
@@ -132,7 +142,7 @@
                 cartItem.className = 'cart-item';
                 cartItem.id = `cart-item-${index}`;
                 cartItem.innerHTML = `
-                    <img src="${item.img}" alt="${item.name}">
+                    <img src="${validateImageUrl(item.img)}" alt="${item.name}">
                     <h2>${item.name}</h2>
                     <p class="price">$<span id="price-${index}">${item.price}</span></p>
                     <button onclick="redirectToEditPage(${index})">Edit</button>
