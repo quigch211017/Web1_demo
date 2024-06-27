@@ -6,6 +6,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Online Store - Products</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .hidden {
+            display: none;
+        }
+
+        .form-container {
+            margin: 20px 0;
+        }
+
+        .form-container input,
+        .form-container select {
+            display: block;
+            margin-bottom: 10px;
+            padding: 8px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .form-container button {
+            padding: 10px;
+            background: #28a745;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .form-container button:hover {
+            background: #218838;
+        }
+    </style>
 </head>
 
 <body>
@@ -28,79 +60,27 @@
     </header>
     <main>
         <h1>Products</h1>
+        <button onclick="toggleCreateForm()">Create Product</button>
+        <div class="form-container hidden" id="create-form">
+            <h2>Create New Product</h2>
+            <input type="text" id="new-name" placeholder="Product Name" required>
+            <input type="number" id="new-price" placeholder="Price" step="0.01" required>
+            <input type="text" id="new-description" placeholder="Description" required>
+            <input type="url" id="new-img" placeholder="Image URL" required>
+            <label for="new-color">Color:</label>
+            <select id="new-color">
+                <option value="red">Red</option>
+                <option value="blue">Blue</option>
+                <option value="green">Green</option>
+                <option value="yellow">Yellow</option>
+                <option value="black">Black</option>
+                <option value="white">White</option>
+                <option value="purple">Purple</option>
+            </select>
+            <button onclick="createProduct()">Create</button>
+        </div>
         <div id="product-grid" class="product-grid">
-            <div class="product" data-name="iPhone 13" data-price="999.99" data-description="The latest iPhone with A15 Bionic chip, 5G capability, and improved cameras." data-img="https://images.fpt.shop/unsafe/fit-in/960x640/filters:quality(90):fill(white):upscale()/fptshop.com.vn/Uploads/Originals/2022/3/30/637842470242656074_iphone-13-white.jpg" data-colors="red,blue,green,yellow,black,white,purple">
-                <img src="https://images.fpt.shop/unsafe/fit-in/960x640/filters:quality(90):fill(white):upscale()/fptshop.com.vn/Uploads/Originals/2022/3/30/637842470242656074_iphone-13-white.jpg" alt="iPhone 13">
-                <h2>iPhone 13</h2>
-                <p class="price">$999.99</p>
-                <p class="description">The latest iPhone with A15 Bionic chip, 5G capability, and improved cameras.</p>
-                <label for="color-iphone13">Color:</label>
-                <select id="color-iphone13">
-                    <option value="red">Red</option>
-                    <option value="blue">Blue</option>
-                    <option value="green">Green</option>
-                    <option value="yellow">Yellow</option>
-                    <option value="black">Black</option>
-                    <option value="white">White</option>
-                    <option value="purple">Purple</option>
-                </select>
-                <button onclick="addToCart(this)">Add to Cart</button>
-                <button onclick="viewDetail(this)">Detail</button>
-            </div>
-            <div class="product" data-name="Samsung Galaxy S21" data-price="899.99" data-description="Experience the power of Samsung Galaxy with the S21's advanced features." data-img="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaj65llRXI-QMsIDeW0gVB2ZZVdr0bOQm1kA&s" data-colors="red,blue,green,yellow,black,white,purple">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaj65llRXI-QMsIDeW0gVB2ZZVdr0bOQm1kA&s" alt="Samsung Galaxy S21">
-                <h2>Samsung Galaxy S21</h2>
-                <p class="price">$899.99</p>
-                <p class="description">Experience the power of Samsung Galaxy with the S21's advanced features.</p>
-                <label for="color-s21">Color:</label>
-                <select id="color-s21">
-                    <option value="red">Red</option>
-                    <option value="blue">Blue</option>
-                    <option value="green">Green</option>
-                    <option value="yellow">Yellow</option>
-                    <option value="black">Black</option>
-                    <option value="white">White</option>
-                    <option value="purple">Purple</option>
-                </select>
-                <button onclick="addToCart(this)">Add to Cart</button>
-                <button onclick="viewDetail(this)">Detail</button>
-            </div>
-            <div class="product" data-name="Samsung S23" data-price="799.99" data-description="Google's newest Pixel phone with powerful AI features and a stunning display." data-img="https://images.fpt.shop/unsafe/fit-in/960x640/filters:quality(90):fill(white):upscale()/fptshop.com.vn/Uploads/Originals/2024/4/1/638475836030618950_SS%20S23%20FE-4.jpg" data-colors="red,blue,green,yellow,black,white,purple">
-                <img src="https://images.fpt.shop/unsafe/fit-in/960x640/filters:quality(90):fill(white):upscale()/fptshop.com.vn/Uploads/Originals/2024/4/1/638475836030618950_SS%20S23%20FE-4.jpg" alt="Samsung S23">
-                <h2>Samsung S23</h2>
-                <p class="price">$799.99</p>
-                <p class="description">Google's newest Pixel phone with powerful AI features and a stunning display.</p>
-                <label for="color-s23">Color:</label>
-                <select id="color-s23">
-                    <option value="red">Red</option>
-                    <option value="blue">Blue</option>
-                    <option value="green">Green</option>
-                    <option value="yellow">Yellow</option>
-                    <option value="black">Black</option>
-                    <option value="white">White</option>
-                    <option value="purple">Purple</option>
-                </select>
-                <button onclick="addToCart(this)">Add to Cart</button>
-                <button onclick="viewDetail(this)">Detail</button>
-            </div>
-            <div class="product" data-name="Oppo a58" data-price="969.99" data-description="OnePlus's flagship phone with top-notch performance and build quality." data-img="https://images.fpt.shop/unsafe/fit-in/960x640/filters:quality(90):fill(white):upscale()/fptshop.com.vn/Uploads/Originals/2024/2/20/638440477995784821_Oppo%20reno%2011F-2.jpg" data-colors="red,blue,green,yellow,black,white,purple">
-                <img src="https://images.fpt.shop/unsafe/fit-in/960x640/filters:quality(90):fill(white):upscale()/fptshop.com.vn/Uploads/Originals/2024/2/20/638440477995784821_Oppo%20reno%2011F-2.jpg" alt="Oppo a58">
-                <h2>Oppo a58</h2>
-                <p class="price">$969.99</p>
-                <p class="description">OnePlus's flagship phone with top-notch performance and build quality.</p>
-                <label for="color-oppo">Color:</label>
-                <select id="color-oppo">
-                    <option value="red">Red</option>
-                    <option value="blue">Blue</option>
-                    <option value="green">Green</option>
-                    <option value="yellow">Yellow</option>
-                    <option value="black">Black</option>
-                    <option value="white">White</option>
-                    <option value="purple">Purple</option>
-                </select>
-                <button onclick="addToCart(this)">Add to Cart</button>
-                <button onclick="viewDetail(this)">Detail</button>
-            </div>
+            <!-- Product items will be inserted here -->
         </div>
         <p id="no-results" style="display:none;">No products found.</p>
     </main>
@@ -163,8 +143,67 @@
             window.location.href = url.toString();
         }
 
-        // Run search on page load in case of search query in URL
-        window.onload = searchProducts;
+        function toggleCreateForm() {
+            const form = document.getElementById('create-form');
+            form.classList.toggle('hidden');
+        }
+
+        function createProduct() {
+            const name = document.getElementById('new-name').value;
+            const price = document.getElementById('new-price').value;
+            const description = document.getElementById('new-description').value;
+            const img = document.getElementById('new-img').value;
+            const color = document.getElementById('new-color').value;
+
+            const newProduct = { name, price, description, img, color };
+            const products = JSON.parse(localStorage.getItem('products')) || [];
+            products.push(newProduct);
+            localStorage.setItem('products', JSON.stringify(products));
+
+            displayProduct(newProduct);
+            toggleCreateForm();
+            alert('Product created successfully!');
+        }
+
+        function displayProduct(product) {
+            const productGrid = document.getElementById('product-grid');
+            const newProductElement = document.createElement('div');
+            newProductElement.className = 'product';
+            newProductElement.setAttribute('data-name', product.name);
+            newProductElement.setAttribute('data-price', product.price);
+            newProductElement.setAttribute('data-description', product.description);
+            newProductElement.setAttribute('data-img', product.img);
+            newProductElement.setAttribute('data-colors', product.color);
+            newProductElement.innerHTML = `
+                <img src="${product.img}" alt="${product.name}">
+                <h2>${product.name}</h2>
+                <p class="price">$${product.price}</p>
+                <p class="description">${product.description}</p>
+                <label for="color-${product.name.replace(/\s+/g, '-').toLowerCase()}">Color:</label>
+                <select id="color-${product.name.replace(/\s+/g, '-').toLowerCase()}">
+                    <option value="red">Red</option>
+                    <option value="blue">Blue</option>
+                    <option value="green">Green</option>
+                    <option value="yellow">Yellow</option>
+                    <option value="black">Black</option>
+                    <option value="white">White</option>
+                    <option value="purple">Purple</option>
+                </select>
+                <button onclick="addToCart(this)">Add to Cart</button>
+                <button onclick="viewDetail(this)">Detail</button>
+            `;
+            productGrid.appendChild(newProductElement);
+        }
+
+        function loadProducts() {
+            const products = JSON.parse(localStorage.getItem('products')) || [];
+            products.forEach(displayProduct);
+        }
+
+        window.onload = function() {
+            loadProducts();
+            searchProducts();
+        }
     </script>
 </body>
 
