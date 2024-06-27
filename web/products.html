@@ -110,8 +110,20 @@
             alert(`${name} has been added to your cart!`);
         }
 
-        function viewDetail(url) {
-            window.location.href = url;
+        function viewDetail(button) {
+            const product = button.closest('.product');
+            const name = product.getAttribute('data-name');
+            const price = product.getAttribute('data-price');
+            const description = product.getAttribute('data-description');
+            const img = product.getAttribute('data-img');
+
+            const url = new URL('product_detail.html', window.location.origin);
+            url.searchParams.set('name', name);
+            url.searchParams.set('price', price);
+            url.searchParams.set('description', description);
+            url.searchParams.set('img', img);
+
+            window.location.href = url.toString();
         }
 
         // Run search on page load in case of search query in URL
