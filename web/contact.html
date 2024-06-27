@@ -28,7 +28,7 @@
     </header>
     <main>
         <h1>Contact Us</h1>
-        <form>
+        <form onsubmit="return handleSubmit(event)">
             <div class="form-group">
                 <label for="name">Full Name:</label>
                 <input type="text" id="name" name="name" required>
@@ -47,6 +47,15 @@
     <footer>
         <p>&copy; 2024 Online Store. All rights reserved.</p>
     </footer>
+
+    <script>
+        function handleSubmit(event) {
+            event.preventDefault();
+            alert('Your message has been sent successfully!');
+            // Optionally, you can reset the form here
+            event.target.reset();
+        }
+    </script>
 </body>
 
 </html>
