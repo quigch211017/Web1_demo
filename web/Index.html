@@ -127,7 +127,7 @@
                 const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
                 cartItems.push({ name, price, img });
                 localStorage.setItem('cartItems', JSON.stringify(cartItems));
-                alert(`${name} has been added to your cart!`);
+                alert('${name} has been added to your cart!');
             });
         });
 

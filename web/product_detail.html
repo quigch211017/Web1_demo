@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Detail</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul class="menu-left">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="cart.html">Cart</a></li>
+                <li><a href="checkout.html">Checkout</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="menu-right">
+                <div class="search-bar">
+                    <input type="text" id="search-input" placeholder="Search for products...">
+                    <button onclick="searchProducts()">Search</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div id="product-detail" class="product-detail">
+            <!-- Product details will be inserted here -->
+        </div>
+        <p id="no-product" style="display:none;">No product details available.</p>
+    </main>
+    <footer>
+        <p>&copy; 2024 Online Store. All rights reserved.</p>
+    </footer>
+    <script>
+        function searchProducts() {
+            const searchQuery = document.getElementById('search-input').value.toLowerCase();
+            const products = document.querySelectorAll('.product');
+            let found = false;
+
+            products.forEach(product => {
+                const productName = product.getAttribute('data-name').toLowerCase();
+                if (productName.includes(searchQuery)) {
+                    product.style.display = 'block';
+                    found = true;
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+
+            if (!found) {
+                document.getElementById('no-results').style.display = 'block';
+            } else {
+                document.getElementById('no-results').style.display = 'none';
+            }
+        }
+
+        function addToCart() {
+            const name = document.getElementById('product-name').textContent;
+            const price = document.getElementById('product-price').textContent.replace('$', '');
+            const img = document.getElementById('product-img').src;
+            const color = document.getElementById('product-color').value;
+
+            const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+            cartItems.push({ name, price, img, color });
+            localStorage.setItem('cartItems', JSON.stringify(cartItems));
+            alert(`${name} in ${color} has been added to your cart!`);
+        }
+
+        function loadProductDetails() {
+            const params = new URLSearchParams(window.location.search);
+            const name = params.get('name');
+            const price = params.get('price');
+            const description = params.get('description');
+            const img = params.get('img');
+            const color = params.get('color');
+
+            if (name && price && description && img) {
+                const productDetail = document.getElementById('product-detail');
+                productDetail.innerHTML = `
+                    <img id="product-img" src="${img}" alt="${name}">
+                    <h1 id="product-name">${name}</h1>
+                    <p id="product-price">$${price}</p>
+                    <p id="product-description">${description}</p>
+                    <label for="product-color">Color:</label>
+                    <select id="product-color">
+                        <option value="red" ${color === 'red' ? 'selected' : ''}>Red</option>
+                        <option value="blue" ${color === 'blue' ? 'selected' : ''}>Blue</option>
+                        <option value="green" ${color === 'green' ? 'selected' : ''}>Green</option>
+                        <option value="yellow" ${color === 'yellow' ? 'selected' : ''}>Yellow</option>
+                        <option value="black" ${color === 'black' ? 'selected' : ''}>Black</option>
+                        <option value="white" ${color === 'white' ? 'selected' : ''}>White</option>
+                        <option value="purple" ${color === 'purple' ? 'selected' : ''}>Purple</option>
+                    </select>
+                    <button onclick="addToCart()">Add to Cart</button>
+                `;
+            } else {
+                document.getElementById('no-product').style.display = 'block';
+            }
+        }
+
+        window.onload = function() {
+            loadProductDetails();
+        };
+    </script>
+</body>
+</html>

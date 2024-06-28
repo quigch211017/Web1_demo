@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -39,7 +38,6 @@
         }
     </style>
 </head>
-
 <body>
     <header>
         <nav>
@@ -116,31 +114,12 @@
             const price = product.getAttribute('data-price');
             const img = product.getAttribute('data-img');
             const colorSelect = product.querySelector('select');
-            const color = colorSelect.value;
+            const color = colorSelect ? colorSelect.value : '';
 
             const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
             cartItems.push({ name, price, img, color });
             localStorage.setItem('cartItems', JSON.stringify(cartItems));
             alert(`${name} in ${color} has been added to your cart!`);
-        }
-
-        function viewDetail(button) {
-            const product = button.closest('.product');
-            const name = product.getAttribute('data-name');
-            const price = product.getAttribute('data-price');
-            const description = product.getAttribute('data-description');
-            const img = product.getAttribute('data-img');
-            const colorSelect = product.querySelector('select');
-            const color = colorSelect.value;
-
-            const url = new URL('product_detail.html', window.location.origin);
-            url.searchParams.set('name', name);
-            url.searchParams.set('price', price);
-            url.searchParams.set('description', description);
-            url.searchParams.set('img', img);
-            url.searchParams.set('color', color);
-
-            window.location.href = url.toString();
         }
 
         function toggleCreateForm() {
@@ -206,10 +185,30 @@
             }
         }
 
+        function viewDetail(button) {
+            const product = button.closest('.product');
+            const name = product.getAttribute('data-name');
+            const price = product.getAttribute('data-price');
+            const description = product.getAttribute('data-description');
+            const img = product.getAttribute('data-img');
+            const colorSelect = product.querySelector('select');
+            const color = colorSelect ? colorSelect.value : '';
+
+            // Tạo URL với các tham số truy vấn
+            const url = new URL('product_detail.html', window.location.href);
+            url.searchParams.set('name', name);
+            url.searchParams.set('price', price);
+            url.searchParams.set('description', description);
+            url.searchParams.set('img', img);
+            url.searchParams.set('color', color);
+
+            // Chuyển hướng đến URL đã tạo
+            window.location.href = url.toString();
+        }
+
         window.onload = function() {
             loadProducts();
         }
     </script>
 </body>
-
 </html>
