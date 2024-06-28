@@ -196,13 +196,18 @@
         }
 
         function loadProducts() {
-            const products = JSON.parse(localStorage.getItem('products')) || [];
-            products.forEach(displayProduct);
+            const searchResults = JSON.parse(localStorage.getItem('searchResults'));
+            const productGrid = document.getElementById('product-grid');
+            if (searchResults && searchResults.length > 0) {
+                searchResults.forEach(displayProduct);
+            } else {
+                const products = JSON.parse(localStorage.getItem('products')) || [];
+                products.forEach(displayProduct);
+            }
         }
 
         window.onload = function() {
             loadProducts();
-            searchProducts();
         }
     </script>
 </body>

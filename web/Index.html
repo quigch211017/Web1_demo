@@ -28,7 +28,7 @@
     <main>
         <h1>Featured Phones</h1>
         <div class="product-grid">
-            <div class="product" data-name="iPhone 13" data-price="999.99" data-img="https://images.fpt.shop/unsafe/fit-in/960x640/filters:quality(90):fill(white):upscale()/fptshop.com.vn/Uploads/Originals/2022/3/30/637842470242656074_iphone-13-white.jpg">
+            <div class="product" data-name="iPhone 13" data-price="999.99" data-description="The latest iPhone with A15 Bionic chip, 5G capability, and improved cameras." data-img="https://images.fpt.shop/unsafe/fit-in/960x640/filters:quality(90):fill(white):upscale()/fptshop.com.vn/Uploads/Originals/2022/3/30/637842470242656074_iphone-13-white.jpg">
                 <a href="product_detail_iphone13.html">
                     <img src="https://images.fpt.shop/unsafe/fit-in/960x640/filters:quality(90):fill(white):upscale()/fptshop.com.vn/Uploads/Originals/2022/3/30/637842470242656074_iphone-13-white.jpg" alt="Phone 1">
                 </a>
@@ -37,7 +37,7 @@
                 <p class="description">The latest iPhone with A15 Bionic chip, 5G capability, and improved cameras.</p>
                 <button class="add-to-cart">Add to Cart</button>
             </div>
-            <div class="product" data-name="Samsung Galaxy S21" data-price="899.99" data-img="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaj65llRXI-QMsIDeW0gVB2ZZVdr0bOQm1kA&s">
+            <div class="product" data-name="Samsung Galaxy S21" data-price="899.99" data-description="Experience the power of Samsung Galaxy with the S21's advanced features." data-img="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaj65llRXI-QMsIDeW0gVB2ZZVdr0bOQm1kA&s">
                 <a href="product_detail_samsung_s21.html">
                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaj65llRXI-QMsIDeW0gVB2ZZVdr0bOQm1kA&s" alt="Phone 2">
                 </a>
@@ -46,7 +46,7 @@
                 <p class="description">Experience the power of Samsung Galaxy with the S21's advanced features.</p>
                 <button class="add-to-cart">Add to Cart</button>
             </div>
-            <div class="product" data-name="Samsung S23" data-price="799.99" data-img="https://images.fpt.shop/unsafe/fit-in/960x640/filters:quality(90):fill(white):upscale()/fptshop.com.vn/Uploads/Originals/2024/4/1/638475836030618950_SS%20S23%20FE-4.jpg">
+            <div class="product" data-name="Samsung S23" data-price="799.99" data-description="Google's newest Pixel phone with powerful AI features and a stunning display." data-img="https://images.fpt.shop/unsafe/fit-in/960x640/filters:quality(90):fill(white):upscale()/fptshop.com.vn/Uploads/Originals/2024/4/1/638475836030618950_SS%20S23%20FE-4.jpg">
                 <a href="product_detail_samsung_s23.html">
                     <img src="https://images.fpt.shop/unsafe/fit-in/960x640/filters:quality(90):fill(white):upscale()/fptshop.com.vn/Uploads/Originals/2024/4/1/638475836030618950_SS%20S23%20FE-4.jpg" alt="Phone 3">
                 </a>
@@ -55,7 +55,7 @@
                 <p class="description">Google's newest Pixel phone with powerful AI features and a stunning display.</p>
                 <button class="add-to-cart">Add to Cart</button>
             </div>
-            <div class="product" data-name="Oppo a58" data-price="969.99" data-img="https://images.fpt.shop/unsafe/fit-in/960x640/filters:quality(90):fill(white):upscale()/fptshop.com.vn/Uploads/Originals/2024/2/20/638440477995784821_Oppo%20reno%2011F-2.jpg">
+            <div class="product" data-name="Oppo a58" data-price="969.99" data-description="OnePlus's flagship phone with top-notch performance and build quality." data-img="https://images.fpt.shop/unsafe/fit-in/960x640/filters:quality(90):fill(white):upscale()/fptshop.com.vn/Uploads/Originals/2024/2/20/638440477995784821_Oppo%20reno%2011F-2.jpg">
                 <a href="product_detail_oppo_a58.html">
                     <img src="https://images.fpt.shop/unsafe/fit-in/960x640/filters:quality(90):fill(white):upscale()/fptshop.com.vn/Uploads/Originals/2024/2/20/638440477995784821_Oppo%20reno%2011F-2.jpg" alt="Phone 4">
                 </a>
@@ -84,6 +84,7 @@
                 <h3>OnePlus Phones</h3>
             </div>
         </div>
+        <p id="search-message" style="display:none;">No products found matching your search.</p>
     </main>
     <footer>
         <p>&copy; 2024 Online Store. All rights reserved.</p>
@@ -91,7 +92,29 @@
     <script>
         document.getElementById('search-button').addEventListener('click', function () {
             const query = document.getElementById('search-input').value.toLowerCase();
-            window.location.href = `products.html?search=${query}`;
+            const products = document.querySelectorAll('.product');
+            let found = false;
+            
+            const matchedProducts = [];
+            products.forEach(product => {
+                const productName = product.getAttribute('data-name').toLowerCase();
+                if (productName.includes(query)) {
+                    matchedProducts.push({
+                        name: product.getAttribute('data-name'),
+                        price: product.getAttribute('data-price'),
+                        description: product.getAttribute('data-description'),
+                        img: product.getAttribute('data-img')
+                    });
+                    found = true;
+                }
+            });
+
+            if (found) {
+                localStorage.setItem('searchResults', JSON.stringify(matchedProducts));
+                window.location.href = 'products.html';
+            } else {
+                document.getElementById('search-message').style.display = 'block';
+            }
         });
 
         document.querySelectorAll('.add-to-cart').forEach(button => {
